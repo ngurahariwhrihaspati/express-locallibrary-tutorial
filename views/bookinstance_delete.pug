@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  h1 ID: #{copies._id}
+  p #[strong Status: ]
+    if copies.status=='Available'
+      span.text-success #{copies.status}
+    else if copies.status=='Maintenance'
+      span.text-danger #{copies.status}
+    else
+      span.text-warning #{copies.status}
+      p #[strong Due back:] #{copies.due_back_formatted}
+
+    p Do you really want to delete this copies?
+
+    form(method='POST')
+      div.form-group
+        input#copiesID.form-control(type='hidden', name='instances', value=copies._id )
+
+      button.btn.btn-primary(type='submit') Delete
