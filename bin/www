@@ -7,18 +7,25 @@
 var app = require("../app");
 var debug = require("debug")("express-locallibrary-tutorial:server");
 var http = require("http");
+require("dotenv").config();
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3000");
+var port = normalizePort(process.env.PORT || "2000");
 app.set("port", port);
 
 //setup mongoose connection
 const mongoose = require("mongoose");
 const mongoDB = process.env.MONGODB_URI;
-("mongodb+srv://ariwhrihaspati:masterx7@cluster0.t9xat6l.mongodb.net/local_library?appName=Cluster0");
+
+if (!mongoDB) {
+  console.error(
+    "Missing MONGODB_URI in environment. Add it to the .env file in this project.",
+  );
+  process.exit(1);
+}
 
 async function connectMongoose() {
   await mongoose.connect(mongoDB);
